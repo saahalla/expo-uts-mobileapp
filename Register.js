@@ -4,29 +4,32 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
-export default function Login({navigation}) {
-
+export default function Register({navigation}) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [password2, setPassword2] = useState('')
 
   
-  onLogin = () => {
+  onRegister = () => {
     if (!username && !password) {
       Alert.alert('Please input username and password!')
     } else if (!username) {
       Alert.alert('Please input username')
     } else if (!password) {
       Alert.alert('Please input password')
-    } else {
-      Alert.alert('Login Success');
-      navigation.navigate('Home')
+    } else if (password != password2) {
+      Alert.alert('Password Confirmation Wrong')
+    }
+    else {
+      Alert.alert('Register Success Please Login with your account');
+      navigation.navigate('Login')
     }
   }
-  
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
-        Login Saahalla App
+        Register Saahalla App
       </Text>
       <TextInput
         value={username}
@@ -41,21 +44,28 @@ export default function Login({navigation}) {
         secureTextEntry={true}
         style={styles.input}
       />
+      <TextInput
+        value={password2}
+        onChangeText={(password2) => setPassword2(password2)}
+        placeholder={'Password Confirmation'}
+        secureTextEntry={true}
+        style={styles.input}
+      />
       
       <Button
-        title={'Login'}
+        title={'Register'}
         style={styles.button}
         onPress={() => {
-          onLogin()
-        }}
+          onRegister()}
+        }
       />
       <Text 
         style={styles.register}
         onPress={() => {
-          navigation.navigate('Register')
+          navigation.navigate('Login')
         }}
       >
-        Create an Account! Register
+        Already have an account? Login!
       </Text>
     </View>
   )
@@ -79,8 +89,7 @@ const styles = StyleSheet.create({
     borderRadius: 10
   },
   button: {
-    borderRadius: 50,
-    paddingHorizontal: 210
+    
   },
   title: {
     marginBottom: 20,
@@ -89,5 +98,6 @@ const styles = StyleSheet.create({
   },
   register: {
     marginTop: 20,
+
   }
 });
